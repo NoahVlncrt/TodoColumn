@@ -5,11 +5,9 @@ import TaskColumn from '../components/TaskColumn'
 
 const fetcher = (...args) => fetch(...args).then(res => res.json())
 
-
 export default function Home() {
   let [person, setPerson] = useState('')
   const { data: fetchedPerson, fetchedPersonError } = useSWR('/api/allPeople', fetcher, { refreshInterval: 500 })
-
 
   let createPerson = () => {
     const body = { name: person }
@@ -21,8 +19,8 @@ export default function Home() {
     setPerson('')
   }
 
-
   if (fetchedPersonError) return <div>failed to load</div>
+  if (!fetchedPerson) return <div>loading...</div>
 
   return (
     <div>
