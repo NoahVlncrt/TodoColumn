@@ -13,6 +13,15 @@ export default function TaskColumn(props) {
         setTask('');
     }
 
+    let completeTask = (id) => {
+        const body = { id }
+        fetch(`http://localhost:3000/api/completeTask`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body),
+        })
+    }
+
     return (
         <div className='border-black'>
             <p>{props.data.name}</p>
@@ -22,7 +31,10 @@ export default function TaskColumn(props) {
             </div>
             <div>
                 {props.data.tasks.map(task => {
-                    return <p>{task.title}</p>
+                    return <div>
+                        <button onClick={()=> completeTask(task.id)}>Mark as Complete</button>
+                        <p>{task.title}</p>
+                    </div>
                 })}
             </div>
         </div>
